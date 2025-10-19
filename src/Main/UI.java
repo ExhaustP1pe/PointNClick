@@ -60,7 +60,7 @@ public class UI
 
     }
 
-    public void createObject(int bgNum,int objx,int objy,int objWidth,
+    public void createObject(int bgNum,int objX,int objY,int objWidth,
                         int objHeight,String objFileName,String choiceName,String choice2Name,String choice3Name)
     {
         // CREATE POPUP MENU
@@ -81,7 +81,7 @@ public class UI
 
         // CREATE OBJECTS
         JLabel objectLabel = new JLabel();
-        objectLabel.setBounds(objx,objy,objWidth,objHeight);
+        objectLabel.setBounds(objX,objY,objWidth,objHeight);
 
         ImageIcon objectIcon = new ImageIcon(getClass().getClassLoader().getResource(objFileName));
         objectLabel.setIcon(objectIcon);
@@ -118,7 +118,7 @@ public class UI
                 "Objects/icons/greenhouse.png","Inspect", "Talk","Rest");
 
         createObject(1,100,170,144,144,
-                "Character sprites/creature-sheet/00_creature-sheet.png","Inspect", "Talk","Attack");
+                "Character sprites/Scarfy.png","Inspect", "Talk","Attack");
 
         createObject(1,250,220,100,100,
                 "Objects/icons/chest1.png","Inspect", "Talk","Open");
