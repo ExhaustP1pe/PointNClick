@@ -7,8 +7,6 @@ public class GameManager
     public static void main(String[] args)//hub
     {
         new GameManager();
-
-
     }
 
     public GameManager()
@@ -16,3 +14,4 @@ public class GameManager
 
     }
 }
+// I'm so gonna put ts on a portfolio when its uni time >:p

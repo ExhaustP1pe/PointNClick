@@ -2,6 +2,8 @@ package Main;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
 public class UI
 {
@@ -9,10 +11,12 @@ public class UI
 
     JFrame window;
     public JTextArea messageTxt;
+
+    //sets the max amount of scenes
     public JPanel[] bgPanel = new JPanel[10];
     public JLabel[] bgLabel = new JLabel[10];
 
-    public UI(GameManager gm)
+    public UI(GameManager gm)//Responsible for Screen
     {
         this.gm = gm;
         createMainField();
@@ -20,7 +24,7 @@ public class UI
         window.setVisible(true);
     }
 
-    public void createMainField()//Parameters for GameWindow & TextArea
+    public void createMainField() // Parameters for GameWindow & TextArea
     {
         window = new JFrame();
         window.setSize(800,620);
@@ -39,7 +43,7 @@ public class UI
         window.add(messageTxt);
     }
 
-    public void createBackground(int bgNum,String bgFileName)
+    public void createBackground(int bgNum,String bgFileName) // Manages the Background
     {
         bgPanel[bgNum] = new JPanel();
         bgPanel[bgNum].setBounds(50,55,700,350);
@@ -56,27 +60,73 @@ public class UI
 
     }
 
-    public void createObject(int bgNum,int objx,int objy,int objWidth,int objHeight,String objFileName)
+    public void createObject(int bgNum,int objx,int objy,int objWidth,
+                        int objHeight,String objFileName,String choiceName,String choice2Name,String choice3Name)
     {
+        // CREATE POPUP MENU
+        JPopupMenu popMenu = new JPopupMenu();
+
+        // CREATE POPUP MENU ITEMS
+        JMenuItem[] menuItem = new JMenuItem[4]; // just use [1],[2],[3]
+
+        menuItem[1] = new JMenuItem(choiceName); //Choice 1
+        popMenu.add(menuItem[1]);
+
+        menuItem[2] = new JMenuItem(choice2Name);//Choice 2
+        popMenu.add(menuItem[2]);
+
+        menuItem[3] = new JMenuItem(choice3Name);//Choice 3
+        popMenu.add(menuItem[3]);
+
+
+        // CREATE OBJECTS
         JLabel objectLabel = new JLabel();
         objectLabel.setBounds(objx,objy,objWidth,objHeight);
 
         ImageIcon objectIcon = new ImageIcon(getClass().getClassLoader().getResource(objFileName));
         objectLabel.setIcon(objectIcon);
 
+        // REMOVES NULL CHOICES - I MADE THIS BY MYSELF >:]
+        if(choiceName == null) {popMenu.remove(menuItem[1]);}
+        if(choice2Name == null) {popMenu.remove(menuItem[2]);}
+        if(choice3Name == null) {popMenu.remove(menuItem[3]);}
+
+        // LISTENS FOR MOUSE INPUT
+        objectLabel.addMouseListener(new MouseListener()
+        {
+            public void mouseClicked(MouseEvent e) {}
+            public void mousePressed(MouseEvent e)
+            {
+                if (SwingUtilities.isRightMouseButton(e)) {popMenu.show(objectLabel,e.getX(),e.getY());}
+            }
+            public void mouseReleased(MouseEvent e) {}
+            public void mouseEntered(MouseEvent e) {}
+            public void mouseExited(MouseEvent e) {}
+        });
+
+        // DISPLAYS THE BACKGROUND AND OBJECTS FOR THE CURRENT SCENE
         bgPanel[bgNum].add(objectLabel);
         bgPanel[bgNum].add(bgLabel[bgNum]);
     }
 
-    public void generateScreen()
+    public void generateScreen() // RENDERS THE CURRENT SCENE
     {
-       //SCREEN1
+       // SCREEN1 ----------------------------
         createBackground(1,"Backgrounds/forestbg.png");
-        createObject(1, 400,10,617,309,"Objects/icons/greenhouse.png");
-        createObject(1,100,170,144,144,"Character sprites/creature-sheet/00_creature-sheet.png");
-        createObject(1,250,220,100,100,"Objects/icons/chest1.png");
-        createObject(1,-185,-150,309,463,"Objects/icons/tree3.png");
-        createObject(1,60,225,232,77,"Objects/icons/fence.png");
 
+        createObject(1, 400,10,617,309,
+                "Objects/icons/greenhouse.png","Inspect", "Talk","Rest");
+
+        createObject(1,100,170,144,144,
+                "Character sprites/creature-sheet/00_creature-sheet.png","Inspect", "Talk","Attack");
+
+        createObject(1,250,220,100,100,
+                "Objects/icons/chest1.png","Inspect", "Talk","Open");
+
+        createObject(1,-185,-150,309,463,
+                "Objects/icons/tree3.png","Inspect", "dig thru leaves",null);
+
+        createObject(1,60,225,232,77,
+                "Objects/icons/fence.png","Inspect", null,null);
     }
 }
