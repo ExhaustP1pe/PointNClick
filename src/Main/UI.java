@@ -61,7 +61,9 @@ public class UI
     }
 
     public void createObject(int bgNum,int objX,int objY,int objWidth,
-                        int objHeight,String objFileName,String choiceName,String choice2Name,String choice3Name)
+                             int objHeight,String objFileName,String choiceName,
+                             String choice2Name,String choice3Name, String c1Command,
+                             String c2Command,String c3Command)
     {
         // CREATE POPUP MENU
         JPopupMenu popMenu = new JPopupMenu();
@@ -70,12 +72,19 @@ public class UI
         JMenuItem[] menuItem = new JMenuItem[4]; // just use [1],[2],[3]
 
         menuItem[1] = new JMenuItem(choiceName); //Choice 1
+//        menuItem[1].setFont(new Font("Propaganda",Font.PLAIN,10));
+        menuItem[1].addActionListener(gm.aHandler);
+        menuItem[1].setActionCommand(c1Command);
         popMenu.add(menuItem[1]);
 
         menuItem[2] = new JMenuItem(choice2Name);//Choice 2
+        menuItem[2].addActionListener(gm.aHandler);
+        menuItem[2].setActionCommand(c2Command);
         popMenu.add(menuItem[2]);
 
         menuItem[3] = new JMenuItem(choice3Name);//Choice 3
+        menuItem[3].addActionListener(gm.aHandler);
+        menuItem[3].setActionCommand(c3Command);
         popMenu.add(menuItem[3]);
 
 
@@ -115,18 +124,27 @@ public class UI
         createBackground(1,"Backgrounds/forestbg.png");
 
         createObject(1, 400,10,617,309,
-                "Objects/icons/greenhouse.png","Inspect", "Talk","Rest");
+                "Objects/icons/greenhouse.png","Inspect",
+                "Talk","Rest","lookHut",
+                "talkHut","restHut");
 
         createObject(1,100,170,144,144,
-                "Character sprites/Scarfy.png","Inspect", "Talk","Attack");
+                "Character sprites/Scarfy.png","Inspect",
+                "Talk","Attack","lookGuy",
+                "talkGuy","attackGuy");
 
         createObject(1,250,220,100,100,
-                "Objects/icons/chest1.png","Inspect", "Talk","Open");
+                "Objects/icons/chest1.png","Inspect",
+                "Talk","Open","lookChest",
+                "talkChest","openChest");
 
         createObject(1,-185,-150,309,463,
-                "Objects/icons/tree3.png","Inspect", "dig thru leaves",null);
+                "Objects/icons/tree3.png","Inspect",
+                "dig thru leaves",null,
+                "lookTree","digTree","");
 
         createObject(1,60,225,232,77,
-                "Objects/icons/fence.png","Inspect", null,null);
+                "Objects/icons/fence.png",null,
+                null,null,"","","");
     }
 }
